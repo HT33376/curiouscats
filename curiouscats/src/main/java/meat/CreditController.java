@@ -1,0 +1,24 @@
+package meat;
+
+import java.io.IOException;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class CreditController {
+    @FXML
+    private void switchBack(ActionEvent event) throws IOException {
+        Parent previousRoot = FXMLLoader.load(getClass().getResource("/MainView.fxml")); // the previous scene
+        Scene previousScene = new Scene(previousRoot);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(previousScene);
+        stage.show();
+        System.out.println("Button Pressed");
+    }
+}
