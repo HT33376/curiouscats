@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?> <!-- for Button, Label,... -->
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="meat.MainController">
+    <Button fx:id="startButton" text="Start" onAction="#switchStart"/>
+    <Button fx:id="galleryButton" text="Gallery" onAction="#switchGallery"/>
+    <Button fx:id="settingButton" text="Setting" onAction="#switchSetting"/>
+    <Button fx:id="creditButton" text="Credut" onAction="#switchCredit"/>
+
+</AnchorPane>

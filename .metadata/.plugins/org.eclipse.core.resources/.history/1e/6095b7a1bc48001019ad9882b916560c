@@ -1,0 +1,84 @@
+package meat;
+
+import java.io.IOException;
+import java.net.URL;
+
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.animation.*;
+
+public class MainController {
+
+	    @FXML private Button startButton;
+	    @FXML private Button galleryButton;
+	    @FXML private Button settingButton;
+	    @FXML private Button creditButton;
+
+
+	    //Buttons actions 
+	    @FXML
+	    private void switchStart() throws IOException {  	    	
+	        Parent settingsRoot = FXMLLoader.load(getClass().getResource("/MainView.fxml"));
+	        Scene scene = startButton.getScene();
+	        scene.setRoot(settingsRoot);
+	        
+	        
+	        Stage stage = new Stage();
+	        scene = new Scene(new Label("bruh"), 800, 600);
+	        stage.setScene(scene);
+	    }
+	    
+	    @FXML
+	    private void switchGallery() throws IOException {  
+//	        Parent settingsRoot = FXMLLoader.load(getClass().getResource("/MainView.fxml"));
+//	        Scene scene = startButton.getScene();
+//	        scene.setRoot(settingsRoot);
+	    	
+	    	System.out.println("HELLO WORLDDD");
+	    }
+	    
+	    
+	    //TESTER BUTTON: og name is "handleStart"
+	    @FXML
+	    private void switchSetting(ActionEvent event) throws IOException {
+	        Parent mainRoot = FXMLLoader.load(getClass().getResource("/MainView.fxml"));
+	        Label Tester = new Label("Idk");
+	        Scene mainScene = new Scene(Tester, 800, 600);
+	        mainScene.setFill(Color.RED);
+
+
+
+	        // Get current stage from button
+	        Stage stage = (Stage) settingButton.getScene().getWindow();
+	        stage.setScene(mainScene);
+	        stage.show();
+	    }
+	    
+	    @FXML
+	    private void switchCredit() throws IOException {  
+	        Parent settingsRoot = FXMLLoader.load(getClass().getResource("/MainView.fxml"));
+	        Scene scene = startButton.getScene();
+	        scene.setRoot(settingsRoot);
+	    }
+
+	    
+	    //Action of the start timer button(removed)
+	    @FXML
+	    private void startTimer() {
+	        Timeline timer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+	            System.out.println("Timer tick");
+	        }));
+	        timer.setCycleCount(Timeline.INDEFINITE);
+	        timer.play();
+	    }
+
+}

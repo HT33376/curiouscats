@@ -1,0 +1,5 @@
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="your.package.MainController">
+    <Button fx:id="switchSceneButton" text="Go to Settings" onAction="#switchScene"/>
+    <Button fx:id="startTimerButton" text="Start Timer" onAction="#startTimer"/>
+</AnchorPane>

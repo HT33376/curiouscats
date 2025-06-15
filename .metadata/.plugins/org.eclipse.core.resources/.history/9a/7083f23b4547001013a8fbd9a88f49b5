@@ -1,0 +1,9 @@
+public class MainController {
+    @FXML
+    private Button myButton;
+
+    @FXML
+    private void handleButtonClick() {
+        System.out.println("Button clicked!");
+    }
+}

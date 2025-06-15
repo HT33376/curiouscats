@@ -1,0 +1,12 @@
+package meat;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+
+public class LauncherController {
+    @FXML private Button startButton;
+
+	public void switchStart() {
+		System.out.println("Button pressed. Update content later");
+	}
+}
