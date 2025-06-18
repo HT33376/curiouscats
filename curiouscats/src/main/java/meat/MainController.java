@@ -29,9 +29,7 @@ public class MainController {
     @FXML
     private void switchStart() throws IOException {  	    	
     	//This line of code is supposed to redirect user to the launcher area files
-    	System.out.println("Button is linked");
         Parent settingsRoot = FXMLLoader.load(getClass().getResource("/LauncherView.fxml"));
-    	System.out.println("Launcher is linked");
 
         Scene scene = new Scene(new Label("This button is fine"));
         scene.setRoot(settingsRoot);
@@ -82,9 +80,9 @@ public class MainController {
 
     
     
-    public Button getStartButton() {
-    	return startButton;
-    }
+//    public Button getStartButton() {
+//    	return startButton;
+//    }
     
     
     

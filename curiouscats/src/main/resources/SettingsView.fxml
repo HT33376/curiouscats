@@ -8,13 +8,7 @@
 <!-- WARNING: Placeholder codes: Program won't run without it, fix later!!'... -->
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="meat.SettingsController">
-   <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <children>
-         <VBox fx:id="vbox" alignment="CENTER" spacing="25.0">
-            <children>
-                <Button fx:id="backButton" alignment="CENTER" layoutX="250.0" layoutY="312.0" onAction="#switchBack" prefHeight="40.0" prefWidth="300.0" text="Back" />
-            </children>
-         </VBox>
-      </children>
-   </StackPane>
+	<children>
+  		<Button fx:id="backButton" alignment="CENTER" layoutX="14.0" layoutY="14.0" onAction="#switchBack" prefHeight="16.0" prefWidth="59.0" text="Back" />
+	</children>
 </AnchorPane>
