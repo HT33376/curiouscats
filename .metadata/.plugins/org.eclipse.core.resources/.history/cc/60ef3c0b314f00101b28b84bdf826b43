@@ -1,0 +1,58 @@
+package launcherClassObjects;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import meat.LauncherController;
+
+public class ImageLogEntry {
+    Image image;
+    ImageView imageView;
+    Label countLabel;
+    int count;
+    VBox node; // changed from HBox to VBox
+    
+    private static final Map<String, Image> imageCache = new HashMap<>();
+
+    public class ImageCache {
+
+        public static Image loadCachedImage(String path) {
+            return imageCache.computeIfAbsent(path, p ->
+                new Image(ImageCache.class.getResource(p).toExternalForm()));
+        }
+    }
+
+    //This will be connected to timer controller to help log images to the VBox in launcher view
+    public ImageLogEntry(ImageView imageViewEntry) {
+        this.count = 1;
+
+        this.imageView = imageViewEntry;
+        imageView.setFitWidth(180);
+        imageView.setPreserveRatio(true);
+
+        this.countLabel = new Label("Count: " + count);
+        this.countLabel.setStyle("-fx-font-size: 14;");
+
+//        setVBox();
+    }
+
+    public void increment() {
+        count++;
+        countLabel.setText("Count: " + count);
+    }
+    
+    public void setVBox(VBox argument) {
+//        this.node = new VBox(imageView, countLabel);
+//        this.node = getVBox();
+
+        this.node.setAlignment(Pos.CENTER);
+        this.node.setSpacing(5);
+    }
+}
+
+

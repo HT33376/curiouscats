@@ -83,17 +83,5 @@ public class MainController {
 //    public Button getStartButton() {
 //    	return startButton;
 //    }
-    
-    
-    
-    //Action of the start timer button(removed)
-    @FXML
-    private void startTimer() {
-        Timeline timer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            System.out.println("Timer tick");
-        }));
-        timer.setCycleCount(Timeline.INDEFINITE);
-        timer.play();
-    }
 
 }

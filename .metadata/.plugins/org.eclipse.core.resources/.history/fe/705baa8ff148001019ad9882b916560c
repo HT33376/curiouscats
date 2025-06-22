@@ -1,7 +1,0 @@
-package meat;
-
-public class LauncherController {
-	public void switchStart() {
-		System.out.println("Button pressed. Update content later");
-	}
-}

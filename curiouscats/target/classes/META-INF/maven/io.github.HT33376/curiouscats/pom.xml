@@ -22,6 +22,21 @@
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
         </dependency>
+        
+        <!--UNTESTED dependency to do tests:-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.0.0</version> 
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.0.0</version> 
+            <scope>test</scope>
+        </dependency>
+		<!--Project compiled! No visible bugs as of yet-->
     </dependencies>
 
 <build>
@@ -45,12 +60,23 @@
                 <execution>
                     <id>default-cli</id>
                     <configuration>
-                        <mainClass>com.example.MainApp</mainClass> <!-- your main class -->
+                        <mainClass>com.example.MainApp</mainClass> <!-- main class here -->
                     </configuration>
                 </execution>
             </executions>
         </plugin>
-    </plugins>
+    	
+    	
+    	<!--This is the plugin for JUNIT testing, copied from "https://www.vogella.com/tutorials/JUnit/article.html"-->
+		<plugin>
+			<artifactId>maven-surefire-plugin</artifactId>
+            <version>3.5.0</version>
+		</plugin>
+		<plugin>
+             <artifactId>maven-failsafe-plugin</artifactId>
+             <version>3.5.0</version>
+		</plugin>
+	</plugins>
 </build>
 
 </project>

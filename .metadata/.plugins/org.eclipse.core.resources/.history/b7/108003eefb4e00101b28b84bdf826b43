@@ -1,0 +1,39 @@
+package launcherClassObjects;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
+class ImageLogEntry {
+    Image image;
+    ImageView imageView;
+    Label countLabel;
+    int count;
+    VBox node; // changed from HBox to VBox
+
+    public ImageLogEntry(Image image) {
+        this.image = image;
+        this.count = 1;
+
+        this.imageView = new ImageView(image);
+        imageView.setFitWidth(200);
+        imageView.setPreserveRatio(true);
+
+        this.countLabel = new Label("Count: " + count);
+        this.countLabel.setStyle("-fx-font-size: 14;");
+
+        this.node = new VBox(imageView, countLabel);
+        this.node.setAlignment(Pos.CENTER);
+        this.node.setSpacing(5);
+    }
+
+    public void increment() {
+        count++;
+        countLabel.setText("Count: " + count);
+    }
+}
+
+

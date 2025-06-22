@@ -1,0 +1,72 @@
+package launcherClassObjects;
+
+import java.util.Random;
+
+import javafx.animation.PauseTransition;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+public class RandomCats {
+	
+	private Random random = new Random();
+	
+	//This is the range/ total amount of pictures the program can choose from, update later
+	final int MIN_VAL = 1;
+	final int MAX_VAL = 5 + 1;
+	//plus one because max val of random.nextInt is exclusive
+
+	
+	private int xAxis;
+	private int yAxis;
+	
+	private Image catImage;
+	ImageView catImgView;
+	private String imageLocation = "/catLibrary/";
+	
+	
+	//No argument constructor, shouldn't need more
+	public RandomCats() {
+		catImage = new Image(getClass().getResource(getString()).toExternalForm());
+		catImgView = new ImageView(catImage);
+		
+		catImgView.setFitHeight(200);
+		catImgView.setFitWidth(200);
+	}
+	
+	
+	public void execute() {
+    	//Size of popup window, this is why it is tiny
+    	VBox box = new VBox();
+    	box.getChildren().add(getCat());
+  
+    	Scene scene = new Scene(box,200,200);
+    	Stage popUpStage =new Stage();
+    	popUpStage.setScene(scene);
+    	
+    	//Window will pop up at random location throughout the screen
+    	popUpStage.setX(800);
+    	popUpStage.setY(600);
+
+    	popUpStage.show();
+
+    	PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
+    	delay.setOnFinished(event -> popUpStage.close());
+    	delay.play();
+	}
+	
+	
+	public ImageView getCat () {
+		return catImgView;
+	}
+	
+	//The strings returned are randomized
+	public String getString() {
+		int num = random.nextInt(MIN_VAL, MAX_VAL);
+		imageLocation = imageLocation + num + ".png";
+		return imageLocation;
+	}
+}

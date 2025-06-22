@@ -5,45 +5,46 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 
 public class LauncherController {
     @FXML private Button launchButton;
     @FXML private Button backButton;
+    @FXML public VBox imageLogBar;
+    
     private Label displayLabel = new Label("Tester");
     private CountdownTimer timer;
+    
+    //This is the amount of seconds in 8 hours
+    private int timeSecond = 28800;
 
     
     @FXML
     public void initialize() {
-    	//timer cannot be 0 or less
-        timer = new CountdownTimer(1, displayLabel, () -> {
-            System.out.println("countdownTimer object in initialize() finished");
-            // Add custom end-of-countdown behavior
+        // Create the timer and wire the log display immediately
+        timer = new CountdownTimer(timeSecond, displayLabel, () -> {
+            System.out.println("countdownTimer object finished");
         });
+
+        timer.setLogTarget(imageLogBar); // ✅ Ensures VBox is available
 
         launchButton.setOnAction(event -> timer.start());
 
-        System.out.println("initialize() completed, button handler set");
+        System.out.println("LauncherController initialized");
     }
     
     @FXML
 	public void switchStart() {
-    	
-    	//Problem: There's a delay in starting the timer. Needs to click multiple times (?) before timer starts
-		
-//		launchButton.setOnAction(event -> {
-//		    CountdownTimer timer = new CountdownTimer(0, displayLabel, () -> {
-//		        System.out.println("Timer finished");
-//		    });
-//		    timer.start();
-//		});
-    	
     	timer.start();
         System.out.println("Bottom of switchStart() of LauncherController is reached. Waiting on countdown");
 
@@ -58,5 +59,13 @@ public class LauncherController {
         stage.setScene(previousScene);
         stage.show();
     }
+    
+    //Currently not used by anything - check later - is working meaninglessly
+    public void catLogAdd() {
+    	imageLogBar.getChildren().add(null);
+    }    
 
-}
+    //THIS SECTION IS UNTESTED
+    
+    }
+

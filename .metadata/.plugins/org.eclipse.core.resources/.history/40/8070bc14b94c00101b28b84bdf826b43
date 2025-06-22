@@ -1,0 +1,64 @@
+package meat;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.util.Duration;
+import javafx.scene.control.Label;
+
+
+//This class is, as of yet, not connected to anything. But later will be to the "launch page/ button"
+//This class is an object in LaunchController, but not hard wired to anything else.
+//countdownTimer is ran twice?
+public class CountdownTimer {
+
+    private int timeSeconds; // Total countdown time in seconds
+    private Timeline timeline;
+
+    public CountdownTimer(int seconds, Label displayLabel, Runnable onComplete) {
+        this.timeSeconds = seconds;
+        displayLabel.setText(String.valueOf(timeSeconds));        //Irrelevant
+
+        timeline = new Timeline(new KeyFrame(Duration.seconds(seconds), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                timeSeconds--;
+                displayLabel.setText(String.valueOf(timeSeconds));
+
+                if(timeSeconds%2 == 0) {
+    	        System.out.println("Timer tester - CountdownTimer class - finished!");
+                }
+
+                // Do something each second here, if needed
+                // For example: check if timeSeconds == 10, do X
+
+                if (timeSeconds <= 0) {
+                    timeline.stop();
+                    if (onComplete != null) onComplete.run(); // Trigger any final action
+                }
+            }
+        }));
+
+        timeline.setCycleCount(seconds); // Repeat every second, for 'seconds' times
+        
+        System.out.println("Bottom CountdownTimer class constructor - bottom");
+    }
+
+    public void start() {
+        timeline.play();
+    }
+
+    public void pause() {
+        timeline.pause();
+    }
+
+    public void stop() {
+        timeline.stop();
+    }
+
+    public boolean isRunning() {
+        return timeline.getStatus() == Timeline.Status.RUNNING;
+    }
+}
+

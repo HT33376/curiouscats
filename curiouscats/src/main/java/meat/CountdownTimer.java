@@ -1,11 +1,23 @@
 package meat;
 
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import launcherClassObjects.RandomCats;
+
+import javafx.scene.*;
+
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 
 //This class is, as of yet, not connected to anything. But later will be to the "launch page/ button"
@@ -15,19 +27,35 @@ public class CountdownTimer {
 
     private int timeSeconds; // Total countdown time in seconds
     private Timeline timeline;
+    private VBox logTarget;
 
+    
+    private Random random = new Random();
+    
+//    private int minRandom = 0;
+//    private int maxRandom = 100;
+//    
+//    private int minThreshold = 0;
+//    private int maxThreshold = 1;
+    
+    
+    RandomCats cat;
+    
+ 
     public CountdownTimer(int seconds, Label displayLabel, Runnable onComplete) {
         this.timeSeconds = seconds;
-        displayLabel.setText(String.valueOf(timeSeconds));
+        displayLabel.setText(String.valueOf(timeSeconds));        //Irrelevant
 
-        timeline = new Timeline(new KeyFrame(Duration.seconds(seconds), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 timeSeconds--;
                 displayLabel.setText(String.valueOf(timeSeconds));
 
-                
-    	        System.out.println("Timer tester - CountdownTimer class - finished!");
+                //Placeholder if branch, fix later
+                if(timeSeconds%1 == 0) {
+                	chances();
+                }
 
                 // Do something each second here, if needed
                 // For example: check if timeSeconds == 10, do X
@@ -43,6 +71,11 @@ public class CountdownTimer {
         
         System.out.println("Bottom CountdownTimer class constructor - bottom");
     }
+    
+    public void setLogTarget(VBox target) {
+        this.logTarget = target;
+        System.out.println("Log VBox set");
+    }
 
     public void start() {
         timeline.play();
@@ -56,8 +89,51 @@ public class CountdownTimer {
         timeline.stop();
     }
 
-    public boolean isRunning() {
-        return timeline.getStatus() == Timeline.Status.RUNNING;
+//    public boolean isRunning() {
+//        return timeline.getStatus() == Timeline.Status.RUNNING;
+//    }
+    
+    /*Make a random number and see if it falls into the accepted threshold. 
+     * If yes: Trigger pop up and reset threshold
+     * If no: Increase threshold for increase chance of hitting the mark
+     */
+    
+    public void chances() {
+//        int target = random.nextInt(maxRandom - minRandom + 1) + minRandom;
+//        if (target <= maxThreshold) {
+//        	
+//        	maxThreshold = 1;
+//        	popUp();
+//            System.out.println("RIGHT HEREERERRRERE");
+//
+//        } else {
+//        	maxThreshold++;
+//        }
+//        
+//        System.out.println(target);
+        
+        
+        popUp();
     }
+    
+//    	public void popUp() {
+//    		cat = new RandomCats();
+//    		cat.execute();
+//    	}
+    	
+    private void popUp() {
+        if (logTarget == null) {
+            System.out.println("❌ VBox logTarget is null! Did you forget setLogTarget()?");
+            return;
+        }
+
+        RandomCats cat = new RandomCats(logTarget); // ✅ Pass VBox directly
+        cat.execute();
+    }
+    
+    	public ImageView getCat() {
+    		return cat.getCat();
+    	}
+
 }
 
