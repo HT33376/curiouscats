@@ -1,0 +1,101 @@
+package launcherClassObjects;
+
+import javafx.animation.PauseTransition;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
+
+import java.util.Random;
+
+public class RandomCats {
+    private static final int MAX_VAL = 5;
+    private static final int MAX_X_AXIS = 1100;
+    private static final int MAX_Y_AXIS = 450;
+
+    private final VBox destination;
+    private final ImageView catImgView;
+    private final Random random = new Random();
+    
+    private VBox recentImgBox;
+    
+    public RandomCats(VBox destination, VBox mostRecentImg) {
+        this.destination = destination;
+        recentImgBox = mostRecentImg;
+
+        
+        // This section will be replace by codes that uses catRarity()
+        int num = 1 + random.nextInt(MAX_VAL);
+        String path = String.format("/catLibrary/%d.png", num);
+        Image catImage = ImageLogEntry.ImageCache.loadCachedImage(path);
+
+        catImgView = new ImageView(catImage);
+        catImgView.setFitHeight(200);
+        catImgView.setFitWidth(200);
+    }
+
+    public void execute() {
+        ImageView popupView = new ImageView(catImgView.getImage());
+        popupView.setFitHeight(200);
+        popupView.setFitWidth(200);
+        VBox box = new VBox(popupView);
+        
+        Stage popupStage = new Stage();
+        Scene scene = new Scene(box, 200, 200);
+        
+        popupStage.setScene(scene);
+        popupStage.setX(random.nextInt(MAX_X_AXIS));
+        popupStage.setY(random.nextInt(MAX_Y_AXIS));
+        popupStage.setAlwaysOnTop(true);
+        popupStage.initStyle(StageStyle.UNDECORATED);
+        popupStage.show();
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
+        delay.setOnFinished(event -> popupStage.close());
+        delay.play();
+
+        
+        //Everything from down here is logging the images to the log bar
+        ImageView logCatView = new ImageView(catImgView.getImage());
+        logCatView.setFitHeight(175);
+        logCatView.setFitWidth(175);
+        
+        System.out.println(destination.getChildren().size());
+
+        if (destination != null) {
+            destination.getChildren().add(0, logCatView); // Add to top
+        }
+        
+        if (destination.getChildren().size() > 10) {
+            destination.getChildren().remove(destination.getChildren().size() - 1); // Remove from bottom
+        }
+        showMostRecent();
+    }
+    
+    public void showMostRecent() {
+        ImageView popupView = new ImageView(catImgView.getImage());
+        popupView.setFitHeight(200);
+        popupView.setFitWidth(200);
+        
+        if(recentImgBox.getChildren().size() > 1 ) {
+        	recentImgBox.getChildren().remove(0);
+        }
+
+        recentImgBox.getChildren().add(popupView);
+        
+        System.out.println(recentImgBox);
+    }
+    
+    public int catRarity() {
+    	//Take in a number, put it in a range of rarity and returns matching rare cat
+    	return 0;
+    }
+
+    public ImageView getCat() {
+        return catImgView;
+    }
+}

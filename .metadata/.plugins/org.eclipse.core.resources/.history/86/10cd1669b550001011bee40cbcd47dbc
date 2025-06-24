@@ -1,0 +1,75 @@
+package meat;
+
+import java.io.IOException;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+
+public class LauncherController {
+    @FXML private Button launchButton;
+    @FXML private Button backButton;
+    @FXML private Button pauseButton;
+    @FXML public VBox imageLogBar;
+    @FXML public VBox mostRecentPng;
+    
+    private Label displayLabel = new Label("Tester");
+    private CountdownTimer timer;
+    
+    //This is the amount of seconds in 8 hours
+    private int timeSecond = 28800;
+
+    
+    @FXML
+    public void initialize() {
+        // Create the timer and wire the log display immediately
+        timer = new CountdownTimer(timeSecond, displayLabel, () -> {
+            System.out.println("countdownTimer object finished");
+        });
+
+        timer.setLogTarget(imageLogBar, mostRecentPng); // ✅ Ensures VBox is available
+
+        launchButton.setOnAction(event -> timer.start());
+
+        System.out.println("LauncherController initialized");
+    }
+    
+    @FXML
+	public void switchStart() {
+    	timer.start();
+        System.out.println("Bottom of switchStart() of LauncherController is reached. Waiting on countdown");
+
+	}
+    
+    @FXML
+    public void switchPause() {
+    	timer.pause();
+    	System.out.println("Pause button finished");
+    }
+    
+    @FXML
+    private void switchBack(ActionEvent event) throws IOException {
+        Parent previousRoot = FXMLLoader.load(getClass().getResource("/MainView.fxml")); // the previous scene
+        Scene previousScene = new Scene(previousRoot);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(previousScene);
+        stage.show();
+    }  
+
+    public void currentPng() {
+	    	//////////////////////
+	}
+}
+

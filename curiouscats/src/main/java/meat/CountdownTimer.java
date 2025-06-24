@@ -28,17 +28,11 @@ public class CountdownTimer {
     private int timeSeconds; // Total countdown time in seconds
     private Timeline timeline;
     private VBox logTarget;
+    private VBox mostRecentImg;
+    private VBox timerBox;
 
     
     private Random random = new Random();
-    
-//    private int minRandom = 0;
-//    private int maxRandom = 100;
-//    
-//    private int minThreshold = 0;
-//    private int maxThreshold = 1;
-    
-    
     RandomCats cat;
     
  
@@ -72,9 +66,15 @@ public class CountdownTimer {
         System.out.println("Bottom CountdownTimer class constructor - bottom");
     }
     
-    public void setLogTarget(VBox target) {
+    public void setLogTarget(VBox target, VBox recentImg, VBox entryBox) {
         this.logTarget = target;
-        System.out.println("Log VBox set");
+        mostRecentImg = recentImg;
+        timerBox = entryBox;
+        System.out.println("Log VBox & other box set");
+    }
+    
+    public void updateTimer() {
+    	// Change what appears in the timer box
     }
 
     public void start() {
@@ -116,18 +116,13 @@ public class CountdownTimer {
         popUp();
     }
     
-//    	public void popUp() {
-//    		cat = new RandomCats();
-//    		cat.execute();
-//    	}
-    	
     private void popUp() {
         if (logTarget == null) {
             System.out.println("❌ VBox logTarget is null! Did you forget setLogTarget()?");
             return;
         }
 
-        RandomCats cat = new RandomCats(logTarget); // ✅ Pass VBox directly
+        RandomCats cat = new RandomCats(logTarget, mostRecentImg); // ✅ Pass VBox directly
         cat.execute();
     }
     

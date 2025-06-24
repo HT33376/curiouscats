@@ -1,0 +1,8 @@
+if (destination != null) {
+    destination.getChildren().add(0, logCatView); // Add to top
+    numberOfChildren++;
+    if (numberOfChildren > 10) {
+        destination.getChildren().remove(destination.getChildren().size() - 1); // Remove from bottom
+        numberOfChildren--;
+    }
+}

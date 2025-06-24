@@ -20,7 +20,10 @@ import javafx.stage.Stage;
 public class LauncherController {
     @FXML private Button launchButton;
     @FXML private Button backButton;
+    @FXML private Button pauseButton;
     @FXML public VBox imageLogBar;
+    @FXML public VBox mostRecentPng;
+    @FXML public VBox timerBox;
     
     private Label displayLabel = new Label("Tester");
     private CountdownTimer timer;
@@ -36,10 +39,9 @@ public class LauncherController {
             System.out.println("countdownTimer object finished");
         });
 
-        timer.setLogTarget(imageLogBar); // ✅ Ensures VBox is available
+        timer.setLogTarget(imageLogBar, mostRecentPng, timerBox); // ✅ Ensures VBox is available
 
         launchButton.setOnAction(event -> timer.start());
-
         System.out.println("LauncherController initialized");
     }
     
@@ -51,6 +53,12 @@ public class LauncherController {
 	}
     
     @FXML
+    public void switchPause() {
+    	timer.pause();
+    	System.out.println("Pause button finished");
+    }
+    
+    @FXML
     private void switchBack(ActionEvent event) throws IOException {
         Parent previousRoot = FXMLLoader.load(getClass().getResource("/MainView.fxml")); // the previous scene
         Scene previousScene = new Scene(previousRoot);
@@ -58,14 +66,10 @@ public class LauncherController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(previousScene);
         stage.show();
-    }
-    
-    //Currently not used by anything - check later - is working meaninglessly
-    public void catLogAdd() {
-    	imageLogBar.getChildren().add(null);
-    }    
+    }  
 
-    //THIS SECTION IS UNTESTED
-    
-    }
+    public void currentPng() {
+	    	//////////////////////
+	}
+}
 

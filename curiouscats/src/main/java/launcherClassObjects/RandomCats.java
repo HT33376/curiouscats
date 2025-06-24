@@ -1,6 +1,7 @@
 package launcherClassObjects;
 
 import javafx.animation.PauseTransition;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -20,10 +21,17 @@ public class RandomCats {
     private final VBox destination;
     private final ImageView catImgView;
     private final Random random = new Random();
-
-    public RandomCats(VBox destination) {
+    
+    private VBox recentImgBox;
+    
+    public RandomCats(VBox destination, VBox mostRecentImg) {
         this.destination = destination;
+        destination.setAlignment(Pos.TOP_CENTER); 
 
+        recentImgBox = mostRecentImg;
+
+        
+        // This section will be replace by codes that uses catRarity()
         int num = 1 + random.nextInt(MAX_VAL);
         String path = String.format("/catLibrary/%d.png", num);
         Image catImage = ImageLogEntry.ImageCache.loadCachedImage(path);
@@ -34,9 +42,15 @@ public class RandomCats {
     }
 
     public void execute() {
-        VBox box = new VBox(catImgView);
-        Scene scene = new Scene(box, 200, 200);
+        ImageView popupView = new ImageView(catImgView.getImage());
+        popupView.setFitHeight(200);
+        popupView.setFitWidth(200);
+        VBox box = new VBox(popupView);
+        
+        
         Stage popupStage = new Stage();
+        Scene scene = new Scene(box, 200, 200);
+        
         popupStage.setScene(scene);
         popupStage.setX(random.nextInt(MAX_X_AXIS));
         popupStage.setY(random.nextInt(MAX_Y_AXIS));
@@ -48,11 +62,43 @@ public class RandomCats {
         delay.setOnFinished(event -> popupStage.close());
         delay.play();
 
+        
+        //Everything from down here is logging the images to the log bar
+        ImageView logCatView = new ImageView(catImgView.getImage());
+        logCatView.setFitHeight(195);
+        logCatView.setFitWidth(195);
+        
+        System.out.println(destination.getChildren().size());
+
         if (destination != null) {
-        	destination.getChildren().add(getCat());
-        } else {
-            System.out.println("❌ destination VBox is null!");
+            destination.getChildren().add(0, logCatView); // Add to top
         }
+        
+        if (destination.getChildren().size() > 10) {
+            destination.getChildren().remove(destination.getChildren().size() - 1); // Remove from bottom
+        }
+        showMostRecent();
+    }
+    
+    public void showMostRecent() {
+        ImageView popupView = new ImageView(catImgView.getImage());
+        popupView.setFitHeight(200);
+        popupView.setFitWidth(200);
+        
+        
+        //Change to set children instead of removing?
+        if(recentImgBox.getChildren().size() >= 2 ) {
+        	recentImgBox.getChildren().remove(1);
+        	recentImgBox.getChildren().remove(0);
+        }
+        
+        recentImgBox.getChildren().add(popupView);
+        recentImgBox.getChildren().add(new Label("papapap"));
+    }
+    
+    public int catRarity() {
+    	//Take in a number, put it in a range of rarity and returns matching rare cat
+    	return 0;
     }
 
     public ImageView getCat() {

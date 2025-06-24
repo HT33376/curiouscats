@@ -1,0 +1,63 @@
+package launcherClassObjects;
+
+import javafx.animation.PauseTransition;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
+
+import java.util.Random;
+
+public class RandomCats {
+    private static final int MAX_VAL = 5;
+    private static final int MAX_X_AXIS = 1100;
+    private static final int MAX_Y_AXIS = 450;
+
+    private final VBox destination;
+    private final ImageView catImgView;
+    private final Random random = new Random();
+
+    public RandomCats(VBox destination) {
+        this.destination = destination;
+
+        int num = 1 + random.nextInt(MAX_VAL);
+        String path = String.format("/catLibrary/%d.png", num);
+        Image catImage = ImageLogEntry.ImageCache.loadCachedImage(path);
+
+        catImgView = new ImageView(catImage);
+        catImgView.setFitHeight(200);
+        catImgView.setFitWidth(200);
+    }
+
+    public void execute() {
+    	//This is the problem, the cat is not instantiated
+        VBox box = new VBox(getCat());
+        Scene scene = new Scene(box);
+        Stage popupStage = new Stage();
+        
+        popupStage.setScene(scene);
+        popupStage.setX(random.nextInt(MAX_X_AXIS));
+        popupStage.setY(random.nextInt(MAX_Y_AXIS));
+        popupStage.setAlwaysOnTop(true);
+        popupStage.initStyle(StageStyle.UNDECORATED);
+        popupStage.show();
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
+        delay.setOnFinished(event -> popupStage.close());
+        delay.play();
+
+        if (destination != null) {
+        	destination.getChildren().add(getCat());
+        } else {
+            System.out.println("❌ destination VBox is null!");
+        }
+    }
+
+    public ImageView getCat() {
+        return catImgView;
+    }
+}
